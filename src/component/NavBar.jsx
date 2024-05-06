@@ -11,8 +11,9 @@ function NavBar() {
             </div>
             <div className="hidden md:flex space-x-6 justify-around text-white">
                 <a className='hover:text-black' href="#">Home</a>
-                <a className='hover:text-black' href="#">About us</a>
                 <a className='hover:text-black' href="#">Catégorie</a>
+                <a className='hover:text-black' href="#">About us</a>
+                <a className='hover:text-black' href="#">Contact us</a>
             </div>
             <div>
                 <a href="#" className='p-2 px-6 text-black bg-white rounded-full baseline hover:bg-darkGrayishBlue hover:text-white'>
