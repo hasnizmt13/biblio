@@ -24,7 +24,7 @@ function BookDetails({ children }) {
     return (
      <>
       
-      <div className="flex justify-center items-center h-full w-full">
+      <div className="mt-8 flex justify-center items-center h-full w-full">
         <div className="bg-darkBlue rounded-lg shadow-lg p-10 w-full">
           <div className="flex justify-center">
             <img className="w-auto h-64" src="src\assets\lesmiserables.jpg" alt="les miserable" />

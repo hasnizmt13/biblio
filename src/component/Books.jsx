@@ -58,11 +58,11 @@ function Books() {
     
         <div className=' flex flex-col  container justify-center p-5  md:mt-20 md:mx-auto w-full'>
 
-        <h1 className="pl-40 justify-center  text-4xl font-bold text-center md:text-left md:text-5xl  md:max-w-md" >
+        <h1 className=" justify-center text-darkBlue  text-4xl font-bold text-center md:text-left md:text-5xl  md:max-w-md" >
             Our Books
         </h1>
 
-        <div  className=' mt-10 flex flex-col justify-center md:flex-row md:flex-wrap gap-10 justify-center'>
+        <div  className=' mt-10 flex flex-col justify-center md:flex-row md:flex-wrap gap-20 justify-center'>
         {livres.map(livre => (
             <div  key={livre.id}  className='p-3 transition-transform transform hover:scale-105 border bg-darkBlue space-y-2 flex flex-col  w-1/4 h-auto '>
                 <img className="w-auto h-96" src="src\assets\lesmiserables.jpg" alt="les miserable" />

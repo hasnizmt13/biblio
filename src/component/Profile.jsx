@@ -3,15 +3,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../Utils/AuthContext.jsx';
 import Commons from './Commons.jsx';
+import EditProfile from './EditProfile.jsx';
+import Modal from 'react-modal'
 
 function Profile() {
-
-    const [showPassword, setShowPassword] = useState(false);
-
-    const togglePasswordVisibility = () => {
-      setShowPassword(!showPassword);
+    const {user} = useAuth();
+      
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const openModal = () => {
+        setModalIsOpen(true);
     };
-    const { user} = useAuth();
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
 
     if (!user) {
         return <p>Please log in to see this page.</p>;
@@ -19,7 +25,7 @@ function Profile() {
   
   return (
     <>
-    <div className='pt-14 flex min-h-screen '>
+    <div className='pt-14 flex min-h-screen bg-gray-200'>
 
         <div className='p-20 mx-auto shadow-lg bg-darkBlue h-100 w-1/3 flex flex-col justify-between'>
 
@@ -27,27 +33,32 @@ function Profile() {
 
         </div>
 
-        <div className=' w-full flex items-start mt-10 justify-center'>
-        <div className='bg-gray-100 flex flex-col w-full h-full'>
-            <img className="w-40 h-40 mx-auto ml-12 my-10 align-center  rounded-full" src="src\assets\profile.jpg" alt="Photo de profile"/>
-            <input className='w-1/3 mx-auto  disabled border-2 rounded-md border-black mt-2 p-3 text-xl text-darkBlue' value={user.nom}/>
-            <input className='w-1/3 mx-auto  disabled border-2 rounded-md border-black mt-2 p-3 text-xl text-darkBlue' value={user.prénom}/>
-            <input className='w-1/3 mx-auto  disabled border-2 rounded-md border-black mt-2 p-3 text-xl text-darkBlue' value={user.email}/>
-            <div className='relative w-full'>
-                <input className='w-1/3 mx-auto disabled border-2 rounded-md border-black mt-2 p-3 text-xl text-darkBlue' 
-                    type={showPassword ? "text" : "password"} 
-                    name='password' 
-                    id='password' 
-                    placeholder="Password"
-                    value={user.password_}/>
-                <button type="button" onClick={togglePasswordVisibility} 
-                        className='absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5'>
-                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-                </button>
+        <div className=' w-full flex flex-col items-center my-auto justify-center'>
+          <div className='bg-white flex flex-col w-1/2 h-auto rounded-xl p-10'>
+            <img className="w-40 h-40 mx-auto mb-10 align-center  rounded-full" src="src\assets\profile.jpg" alt="Photo de profile"/>
+
+            <div className='mx-auto flex space-x-0'>
+              <h1 className='px-2 font-bold text-lg text-darkBlue'>Nom :</h1>
+              <h1 className='px-2 text-lg text-darkBlue'>{user.nom}</h1>
             </div>
+            <div className='mx-auto flex space-x-0'>
+              <h1 className='p-2 font-bold text-lg text-darkBlue'>Prénom :</h1>
+              <h1 className='p-2 text-lg text-darkBlue'>{user.prénom}</h1>
+            </div>
+            <div className='mx-auto flex space-x-0'>
+              <h1 className='px-2 font-bold text-lg text-darkBlue'>Email :</h1>
+              <h1 className='px-2 text-lg text-darkBlue'>{user.email}</h1>
+            </div>
+          </div>
+          <a onClick={() => openModal()} className="mt-10 p-2 px-6 text-white bg-darkBlue rounded-full baseline hover:bg-white hover:text-darkBlue" href="#">Modifier le profile</a>
         </div>
-        </div>
-       
+               {/* Modal pour afficher les détails du livre sélectionné */}
+<div className='hidden flex m-auto h-screen'>
+    <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="my-auto mx-auto flex flew-col justify-between ">
+            {<EditProfile children={user} />}
+    </Modal>
+</div>
+        
     </div>
     </>
   )
