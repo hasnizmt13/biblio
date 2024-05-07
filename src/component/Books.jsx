@@ -2,14 +2,29 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import BookDetails from './BookDetails';
 import Modal from 'react-modal'
+import { useAuth } from '../Utils/AuthContext.jsx';
+
 
 
 
 function Books() {
+    const {user} = useAuth();
+    const [lien , setLien]  = useState("");
     const [livres, setLivres] = useState([]);
     const [selectedBook, setSelectedBook] = useState(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
+    const getlink = () => {
+      if(user){
+          setLien("#");
+      }else{   
+          setLien('/signin')
+        }
+    }
+    useEffect(() => {
+      getlink();
+    });
+  
     // Fonction pour récupérer les livres depuis l'API
     const fetchLivres = async () => {
       try {
@@ -57,7 +72,7 @@ function Books() {
                 <p className="text-xl text-white text-center md:text-left md:text-base md:max-w-md">Année publication : {livre.année_publication}</p>
                 <div className='flex flex-row justify-between mt-1/2'>
                         <a onClick={() => openModal(livre)} className="p-2 px-6 text-darkBlue bg-white rounded-full baseline hover:bg-darkGrayishBlue hover:text-white" href="#">Détails</a>
-                        <a className="p-2 px-6 text-white bg-green-700 rounded-full baseline hover:bg-darkGrayishBlue hover:text-white" href="#">Réserver</a>    
+                        <a className="p-2 px-6 text-white bg-green-700 rounded-full baseline hover:bg-darkGrayishBlue hover:text-white" href={lien}>Réserver</a>    
                 </div>
                 
             </div>
@@ -65,7 +80,7 @@ function Books() {
         ))}
         </div>
         {/* Modal pour afficher les détails du livre sélectionné */}
-<div className='flex m-auto h-screen'>
+<div className='hidden flex m-auto h-screen'>
     <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="my-20 mx-auto flex flew-col justify-between w-2/4 h-4/5">
             {selectedBook && <BookDetails children={selectedBook} />}
     </Modal>

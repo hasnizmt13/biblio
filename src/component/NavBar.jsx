@@ -1,5 +1,8 @@
 import React from 'react'
+import { useAuth } from '../Utils/AuthContext.jsx';
+
 function NavBar() {
+  const {user} = useAuth();
   return (
     <nav className='fixed top-0 left-0 right-0 z-50 bg-darkBlue mb-5 px-5 flex items-center justify-between '>
             <div className='p-2'>
@@ -10,15 +13,24 @@ function NavBar() {
                 </input>
             </div>
             <div className="hidden md:flex space-x-6 justify-around text-white">
-                <a className='hover:text-black' href="#">Home</a>
+                <a className='hover:text-black' href="/">Home</a>
                 <a className='hover:text-black' href="#">Catégorie</a>
                 <a className='hover:text-black' href="#">About us</a>
                 <a className='hover:text-black' href="#">Contact us</a>
+           
             </div>
             <div>
-                <a href="#" className='p-2 px-6 text-black bg-white rounded-full baseline hover:bg-darkGrayishBlue hover:text-white'>
+            { user ? (
+                <a href="/profile" className='p-2 px-6 text-black bg-white rounded-full baseline hover:bg-darkGrayishBlue hover:text-white'>
+                profile
+            </a>
+                )
+            :(
+                <a href="/signin" className='p-2 px-6 text-black bg-white rounded-full baseline hover:bg-darkGrayishBlue hover:text-white'>
                     Sign in
                 </a>
+             )}
+
             </div>
     </nav>
   )

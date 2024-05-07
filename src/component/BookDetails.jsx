@@ -1,7 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../Utils/AuthContext.jsx';
+
 
 function BookDetails({ children }) {
+  const {user} = useAuth();
+  const [lien , setLien]  = useState("");
+
+  const getlink = () => {
+    if(user){
+        setLien("#");
+    }else{   
+        setLien('/signin')
+      }
+
+  }
+
+  useEffect(() => {
+    getlink();
+  });
+
+
+ 
     return (
+     <>
+      
       <div className="flex justify-center items-center h-full w-full">
         <div className="bg-darkBlue rounded-lg shadow-lg p-10 w-full">
           <div className="flex justify-center">
@@ -18,10 +40,11 @@ function BookDetails({ children }) {
             </div>
           </div>
           <div className="flex justify-center">
-          <a className="p-2 px-6 text-darkBlue bg-white rounded-full baseline hover:text-green-500 text-center" href="#">Réserver</a>
+          <a className="p-2 px-6 text-darkBlue bg-white rounded-full baseline hover:text-green-500 text-center" href={lien}>Réserver</a>
         </div>
         </div>
       </div>
+      </>
     );
   }
 
