@@ -48,6 +48,28 @@ CREATE DATABASE bibliotheque
 			prénom VARCHAR(255),
 			email VARCHAR(255),
 			rôle VARCHAR(100),
-			photo VARCHAR(255)  -- URL de l'image de profil de l'utilisateur
+			photo VARCHAR(255)  
 			password_ VARCHAR(255),
+		);
+
+CREATE TABLE admin (
+			id SERIAL PRIMARY KEY,
+			email VARCHAR(255),
+			rôle VARCHAR(100),
+			password_ VARCHAR(255)
+		);
+
+CREATE TABLE contact (
+			id SERIAL PRIMARY KEY,
+			id_utilisateur INT REFERENCES utilisateurs(id),
+			email VARCHAR(255),
+			message TEXT
+		);
+
+CREATE TABLE historique (
+			id SERIAL PRIMARY KEY,
+			id_utilisateur INT REFERENCES utilisateurs(id),
+			id_livre INT REFERENCES livres(id),
+			date_emprunt DATE,
+			date_retour_reelle DATE
 		);

@@ -1,14 +1,14 @@
-import React from 'react'
-import SignUp from '../component/SignUp'
-import NavBar from '../component/NavBar'
+import React from "react";
+import SignUp from "../component/SignUp";
+import NavBar from "../component/NavBar";
 
 function SignUpScreen() {
   return (
     <>
-    <NavBar/>
-    <SignUp/>
+      <NavBar />
+      <SignUp />
     </>
-  )
+  );
 }
 
-export default SignUpScreen
+export default SignUpScreen;
