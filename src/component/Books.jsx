@@ -14,11 +14,6 @@ function Books() {
   const [book, setBook] = useState(null);
 
   const reserveBook = async (book) => {
-    if (!user) {
-      setLien("/signin");
-      return;
-    }
-
     const statut_ = book.disponible ? "confirmé" : "en attente";
 
     const reservationData = {
@@ -144,7 +139,6 @@ function Books() {
                   className="p-2 px-6 text-white bg-green-700 rounded-full baseline hover:bg-darkGrayishBlue hover:text-white"
                   href={lien}
                   onClick={(e) => {
-                    e.preventDefault(); // Prevent default link behavior
                     reserveBook(livre); // Pass the book ID to the reservation function
                   }}
                 >

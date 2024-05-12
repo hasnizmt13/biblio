@@ -127,7 +127,6 @@ function BookDetails({ children }) {
               className="p-2 px-6 text-darkBlue bg-white rounded-full baseline hover:text-green-500 text-center"
               href={lien}
               onClick={(e) => {
-                e.preventDefault(); // Prevent default link behavior
                 reserveBook(children); // Pass the book ID to the reservation function
               }}
             >

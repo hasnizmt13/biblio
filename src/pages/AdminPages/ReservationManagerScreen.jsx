@@ -1,7 +1,14 @@
 import React from "react";
+import NavBarAdmin from "../../component/AdminComponent/NavBarAdmin";
+import ReservationManager from "../../component/AdminComponent/ReservationManager";
 
 function ReservationManagerScreen() {
-  return <div>ReservationManagerScreen</div>;
+  return (
+    <>
+      <NavBarAdmin />
+      <ReservationManager />
+    </>
+  );
 }
 
 export default ReservationManagerScreen;

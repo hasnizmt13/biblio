@@ -1,11 +1,14 @@
 import React from "react";
-import commonAdmin from "../../component/AdminComponent/common";
+import NavBarAdmin from "../../component/AdminComponent/NavBarAdmin";
+import EmpruntManage from "../../component/AdminComponent/EmpruntManager";
 
 function EmpruntManagerScreen() {
-  return;
-  <>
-    <commonAdmin />
-  </>;
+  return (
+    <>
+      <NavBarAdmin />
+      <EmpruntManage />
+    </>
+  );
 }
 
 export default EmpruntManagerScreen;

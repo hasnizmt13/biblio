@@ -23,7 +23,11 @@ function SignIn() {
       if (users.length > 0) {
         console.log("Login Successful:", users[0]); // Debug: show user data
         localStorage.setItem("user", JSON.stringify(users[0])); // Store user data in local storage
-        navigate("/"); 
+        if (users[0].rôle === "admin") {
+          navigate("/empruntManager");
+        } else {
+          navigate("/");
+        }
         window.location.reload();
       } else {
         setError("Login failed. Please check your credentials.");

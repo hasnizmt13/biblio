@@ -17,6 +17,7 @@ import HistoriqueManagerScreen from "./pages/AdminPages/HistoriqueManagerScreen"
 import EmpruntManagerScreen from "./pages/AdminPages/EmpruntManagerScreen";
 import ReservationManagerScreen from "./pages/AdminPages/ReservationManagerScreen";
 import UserManagerScreen from "./pages/AdminPages/UserManagerScreen";
+import LivreManagerScreen from "./pages/AdminPages/LivreManagerScreen";
 
 const router = createBrowserRouter([
   {
@@ -80,7 +81,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/epruntManager",
+    path: "/empruntManager",
     element: (
       <AdminRoute>
         <EmpruntManagerScreen />
@@ -96,7 +97,15 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/usernManager",
+    path: "/livresManager",
+    element: (
+      <AdminRoute>
+        <LivreManagerScreen />
+      </AdminRoute>
+    ),
+  },
+  {
+    path: "/userManager",
     element: (
       <AdminRoute>
         <UserManagerScreen />
