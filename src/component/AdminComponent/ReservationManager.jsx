@@ -1,11 +1,39 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AdminCommon from "./AdminCommon";
+import axios from "axios";
+
 function ReservationManager() {
-  const reservs = [
-    { id: 1, name: "Alice", age: 24, city: "22/05/2024" },
-    { id: 2, name: "Bob", age: 30, city: "22/05/2024" },
-    { id: 3, name: "Carla", age: 29, city: "22/05/2024" },
-  ];
+  const [reservations, setReservation] = useState([]);
+
+  const fetchReservations = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/rpc/all_reservations",
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status !== 200) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+      setReservation(response.data);
+    } catch (error) {
+      console.error("Failed to fetch Reservations:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+      }
+    }
+  };
+  useEffect(() => {
+    fetchReservations();
+  });
+
   return (
     <>
       <div className="pt-14 flex min-h-screen ">
@@ -22,26 +50,34 @@ function ReservationManager() {
               <thead className="bg-darkBlue">
                 <tr>
                   <th className="px-4 py-2 text-white text-left">
-                    Nom du livre
+                    Nom du client
                   </th>
                   <th className="px-4 py-2 text-white text-left">
-                    Date d'emprunt
+                    Titre du livre
                   </th>
                   <th className="px-4 py-2 text-white text-left">
-                    Date de retour prévue
+                    Date de réservation
                   </th>
-                  <th className="px-4 py-2 text-white text-left">
-                    Date de retour réelle
-                  </th>
+                  <th className="px-4 py-2 text-white text-left">Status</th>
                 </tr>
               </thead>
               <tbody>
-                {reservs.map((reserv) => (
+                {reservations.map((reserv) => (
                   <tr key={reserv.id} className="border-b">
-                    <td className="px-4 py-2">{reserv.name}</td>
-                    <td className="px-4 py-2">{reserv.age}</td>
-                    <td className="px-4 py-2">{reserv.city}</td>
-                    <td className="px-4 py-2">{reserv.city}</td>
+                    <td className="px-4 py-2">{reserv.nom}</td>
+                    <td className="px-4 py-2">{reserv.titre}</td>
+                    <td className="px-4 py-2">{reserv.date_reservation}</td>
+                    <td
+                      className={`px-4 py-2 rounded-full font-bold ${
+                        reserv.statut === "en attente"
+                          ? "text-yellow-500"
+                          : reserv.statut === "confirmé"
+                          ? "text-green-500"
+                          : "text-red-500"
+                      }`}
+                    >
+                      {reserv.statut}
+                    </td>
                   </tr>
                 ))}
               </tbody>

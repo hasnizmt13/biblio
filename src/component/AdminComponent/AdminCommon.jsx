@@ -19,6 +19,13 @@ function AdminCommon() {
         <hr />
         <a
           className="text-white text-lg hover:text-gray-300"
+          href="/userManager"
+        >
+          Gestion des utilisateurs
+        </a>
+        <hr />
+        <a
+          className="text-white text-lg hover:text-gray-300"
           href="/reservationManager"
         >
           Gestion des réservations
@@ -36,13 +43,6 @@ function AdminCommon() {
           href="/historiqueManager"
         >
           Gestion d'historiques
-        </a>
-        <hr />
-        <a
-          className="text-white text-lg hover:text-gray-300"
-          href="/userManager"
-        >
-          Gestion des utilisateurs
         </a>
         <hr />
       </div>

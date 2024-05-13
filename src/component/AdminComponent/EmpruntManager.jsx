@@ -1,12 +1,39 @@
 import React from "react";
 import AdminCommon from "./AdminCommon";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 function EmpruntManager() {
-  const reservs = [
-    { id: 1, name: "Alice", age: 24, city: "22/05/2024" },
-    { id: 2, name: "Bob", age: 30, city: "22/05/2024" },
-    { id: 3, name: "Carla", age: 29, city: "22/05/2024" },
-  ];
+  const [emprunts, setEmprunts] = useState([]);
+
+  const fetchEmprunts = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/rpc/all_emprunts",
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status !== 200) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+      setEmprunts(response.data);
+    } catch (error) {
+      console.error("Failed to fetch Reservations:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+      }
+    }
+  };
+  useEffect(() => {
+    fetchEmprunts();
+  });
   return (
     <>
       <div className="pt-14 flex min-h-screen ">
@@ -23,6 +50,9 @@ function EmpruntManager() {
               <thead className="bg-darkBlue">
                 <tr>
                   <th className="px-4 py-2 text-white text-left">
+                    Nom du client
+                  </th>
+                  <th className="px-4 py-2 text-white text-left">
                     Nom du livre
                   </th>
                   <th className="px-4 py-2 text-white text-left">
@@ -37,12 +67,13 @@ function EmpruntManager() {
                 </tr>
               </thead>
               <tbody>
-                {reservs.map((reserv) => (
+                {emprunts.map((emprunt) => (
                   <tr key={reserv.id} className="border-b">
-                    <td className="px-4 py-2">{reserv.name}</td>
-                    <td className="px-4 py-2">{reserv.age}</td>
-                    <td className="px-4 py-2">{reserv.city}</td>
-                    <td className="px-4 py-2">{reserv.city}</td>
+                    <td className="px-4 py-2">{emprunt.nom}</td>
+                    <td className="px-4 py-2">{emprunt.titre}</td>
+                    <td className="px-4 py-2">{emprunt.date_emprunt}</td>
+                    <td className="px-4 py-2">{emprunt.date_retour_prevue}</td>
+                    <td className="px-4 py-2">{emprunt.date_retour_reelle}</td>
                   </tr>
                 ))}
               </tbody>

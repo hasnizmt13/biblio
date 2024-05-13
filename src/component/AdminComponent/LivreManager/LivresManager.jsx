@@ -109,7 +109,11 @@ function LivresManager() {
                       {livre.disponible ? "Oui" : "Non"}
                     </td>
                     <td className="py-2">
-                      <img src="src/assets/lesmiserables.jpg" alt="" />
+                      <img
+                        className="bg-darkBlue"
+                        src={livre.photo}
+                        alt="photo de livre"
+                      />
                     </td>
                     <td className=" py-2">
                       <button

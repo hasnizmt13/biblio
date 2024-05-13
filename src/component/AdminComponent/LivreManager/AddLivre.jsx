@@ -11,8 +11,17 @@ function AddLivre() {
   const [nombre_pages, setNombre_pages] = useState("");
   const [description, setDescription] = useState("");
   const [photo, setPhoto] = useState("");
-
   const [error, setError] = useState("");
+
+  const handleFileChange = (event) => {
+    setPhoto(event.target.files[0]);
+  };
+
+  const simulateFileUpload = (file) => {
+    const filePath = `src\\assets\\DataBase\\${file.name}`;
+    console.log("Simulating file upload to:", filePath);
+    return filePath;
+  };
   const AjouterLivre = async (event) => {
     event.preventDefault();
     setError("");
@@ -27,6 +36,11 @@ function AddLivre() {
         console.log("Isbn Already exist:", users[0]);
         setError("Isbn existe déja");
       } else {
+        let photoPath = "";
+        if (photo) {
+          photoPath = simulateFileUpload(photo);
+        }
+
         const livreData = {
           titre: titre,
           auteur: auteur,
@@ -36,17 +50,17 @@ function AddLivre() {
           disponible: true,
           nombre_pages: nombre_pages,
           description: description,
-          photo: photo,
+          photo: photoPath,
         };
+        console.log("Adding Livre:", livreData);
         try {
           const response = await axios.post(
             "http://localhost:3000/livres",
             livreData
           );
-          console.log("Sign Up Success:", response.data);
-          window.location.reload();
+          console.log("Add Success:", response.data);
         } catch (err) {
-          setError("Sign up failed. Please check your credentials.");
+          setError("Add failed. Please check your credentials.");
           console.error("SingUp Error:", err);
         }
       }
@@ -142,8 +156,7 @@ function AddLivre() {
             name="photo"
             id="photo"
             placeholder="Photo du livre"
-            value={photo}
-            onChange={(e) => setPhoto(e.target.value)}
+            onChange={handleFileChange}
           />
           <button
             className="my-10 w-1/5 p-2 font-bold rounded-full text-darkBlue bg-white hover:text-green-500"
@@ -151,8 +164,6 @@ function AddLivre() {
           >
             Ajouter
           </button>
-          {error && <div className="text-red-500">{error}</div>}
-
           <br />
           <br />
         </form>
