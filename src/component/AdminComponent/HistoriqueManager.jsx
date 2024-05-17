@@ -1,12 +1,35 @@
 import React from "react";
 import AdminCommon from "./AdminCommon";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 function HistoriqueManager() {
-  const reservs = [
-    { id: 1, name: "Alice", age: 24, city: "22/05/2024" },
-    { id: 2, name: "Bob", age: 30, city: "22/05/2024" },
-    { id: 3, name: "Carla", age: 29, city: "22/05/2024" },
-  ];
+  const [historique, setHistorique] = useState([]);
+  const fetchHistorique = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/rpc/all_historique",
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setHistorique(response.data);
+    } catch (error) {
+      console.error("Failed to fetch Reservations:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+      }
+    }
+  };
+  useEffect(() => {
+    fetchHistorique();
+  });
+
   return (
     <>
       <div className="pt-14 flex min-h-screen ">
@@ -37,12 +60,12 @@ function HistoriqueManager() {
                 </tr>
               </thead>
               <tbody>
-                {reservs.map((reserv) => (
-                  <tr key={reserv.id} className="border-b">
-                    <td className="px-4 py-2">{reserv.name}</td>
-                    <td className="px-4 py-2">{reserv.age}</td>
-                    <td className="px-4 py-2">{reserv.city}</td>
-                    <td className="px-4 py-2">{reserv.city}</td>
+                {historique.map((his) => (
+                  <tr key={his.id} className="border-b">
+                    <td className="px-4 py-2">{his.nom}</td>
+                    <td className="px-4 py-2">{his.titre}</td>
+                    <td className="px-4 py-2">{his.date_emprunt}</td>
+                    <td className="px-4 py-2">{his.date_retour_reelle}</td>
                   </tr>
                 ))}
               </tbody>

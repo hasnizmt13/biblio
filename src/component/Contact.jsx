@@ -23,6 +23,8 @@ function Contact() {
         contactData
       );
       console.log("Contact success:", response.data);
+      window.location.reload();
+      alert("Message envoyé");
     } catch (error) {
       console.error("Failed to contact :", error);
       // Handle errors here

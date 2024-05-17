@@ -5,6 +5,45 @@ import { useState, useEffect } from "react";
 
 function EmpruntManager() {
   const [emprunts, setEmprunts] = useState([]);
+  const RendreLivre = async (info) => {
+    const historiqueData = {
+      id_utilisateur: info.id_user,
+      id_livre: info.id_livre,
+      date_emprunt: info.date_emprunt,
+      date_retour_reelle: new Date().toISOString().split("T")[0],
+    };
+    console.log("historiqueData data:", historiqueData);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/historique",
+        historiqueData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      try {
+        const updateResponse = await axios.delete(
+          `http://localhost:3000/emprunts?id=eq.${info.id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      } catch (error) {
+        console.error("Failed to delete reservation:", updateError);
+      }
+    } catch (error) {
+      console.error("Failed to emprunt Book:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+      }
+    }
+  };
 
   const fetchEmprunts = async () => {
     try {
@@ -17,10 +56,6 @@ function EmpruntManager() {
           },
         }
       );
-
-      if (response.status !== 200) {
-        throw new Error(`Network response was not ok: ${response.statusText}`);
-      }
       setEmprunts(response.data);
     } catch (error) {
       console.error("Failed to fetch Reservations:", error);
@@ -61,19 +96,25 @@ function EmpruntManager() {
                   <th className="px-4 py-2 text-white text-left">
                     Date de retour prévue
                   </th>
-                  <th className="px-4 py-2 text-white text-left">
-                    Date de retour réelle
-                  </th>
                 </tr>
               </thead>
               <tbody>
                 {emprunts.map((emprunt) => (
-                  <tr key={reserv.id} className="border-b">
+                  <tr key={emprunt.id} className="border-b">
                     <td className="px-4 py-2">{emprunt.nom}</td>
                     <td className="px-4 py-2">{emprunt.titre}</td>
                     <td className="px-4 py-2">{emprunt.date_emprunt}</td>
                     <td className="px-4 py-2">{emprunt.date_retour_prevue}</td>
-                    <td className="px-4 py-2">{emprunt.date_retour_reelle}</td>
+                    <td className="px-4 py-2">
+                      <button
+                        className="bg-darkBlue text-white p-3 hover:bg-veryDarkBlue rounded-full"
+                        onClick={(e) => {
+                          RendreLivre(emprunt);
+                        }}
+                      >
+                        Rendre Livre
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

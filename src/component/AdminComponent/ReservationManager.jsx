@@ -5,6 +5,51 @@ import axios from "axios";
 function ReservationManager() {
   const [reservations, setReservation] = useState([]);
 
+  const EmpruntToUser = async (info) => {
+    const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 14);
+    const date_retour_prevue = currentDate.toISOString().split("T")[0];
+
+    const empruntData = {
+      id_utilisateur: info.id_user,
+      id_livre: info.id_livre,
+      date_emprunt: new Date().toISOString().split("T")[0],
+      date_retour_prevue: date_retour_prevue,
+    };
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/emprunts",
+        empruntData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      try {
+        const updateResponse = await axios.delete(
+          `http://localhost:3000/reservations?id=eq.${info.id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+      } catch (error) {
+        console.error("Failed to delete reservation:", updateError);
+      }
+      console.log("Reservation update success:", updateResponse.data);
+      fetchReservations();
+    } catch (error) {
+      console.error("Failed to emprunt Book:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+        console.error("Response status:", error.response.status);
+        console.error("Response headers:", error.response.headers);
+      }
+    }
+  };
+
   const fetchReservations = async () => {
     try {
       const response = await axios.post(
@@ -59,6 +104,7 @@ function ReservationManager() {
                     Date de réservation
                   </th>
                   <th className="px-4 py-2 text-white text-left">Status</th>
+                  <th className="px-4 py-2 text-white text-left"></th>
                 </tr>
               </thead>
               <tbody>
@@ -77,6 +123,18 @@ function ReservationManager() {
                       }`}
                     >
                       {reserv.statut}
+                    </td>
+                    <td className="px-4 py-2">
+                      {reserv.statut === "confirmé" ? (
+                        <button
+                          className="bg-darkBlue text-white p-3 hover:bg-veryDarkBlue rounded-full"
+                          onClick={(e) => {
+                            EmpruntToUser(reserv);
+                          }}
+                        >
+                          Emprunter
+                        </button>
+                      ) : null}
                     </td>
                   </tr>
                 ))}

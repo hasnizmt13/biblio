@@ -45,6 +45,13 @@ function AdminCommon() {
           Gestion d'historiques
         </a>
         <hr />
+        <a
+          className="text-white text-lg hover:text-gray-300"
+          href="/contactManager"
+        >
+          Gestion des contacts
+        </a>
+        <hr />
       </div>
       <div className="fixed bottom-10 mt-auto">
         <button

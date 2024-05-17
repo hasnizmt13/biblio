@@ -34,7 +34,7 @@ function LivresManager() {
       console.log(`User  ${liv.id} supprimé: pour`, response.data);
       window.location.reload();
 
-      fetchUsers();
+      fetchLivres();
     } catch (error) {
       console.error("Failed to remove user:", error);
       // Handle errors here
