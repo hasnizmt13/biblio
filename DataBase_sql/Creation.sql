@@ -1,4 +1,3 @@
-
 -- Database: bibliotheque
 
 -- DROP DATABASE IF EXISTS bibliotheque;
@@ -25,14 +24,23 @@ CREATE DATABASE bibliotheque
 		description TEXT,
 		photo VARCHAR(255)  -- URL de l'image du livre
 	);
+		CREATE TABLE utilisateurs (
+			id SERIAL PRIMARY KEY,
+			nom VARCHAR(255),
+			prénom VARCHAR(255),
+			email VARCHAR(255),
+			rôle VARCHAR(100),
+			photo VARCHAR(255)  ,
+			password_ VARCHAR(255)
+		);
+
 
 	CREATE TABLE emprunts (
 		id SERIAL PRIMARY KEY,
 		id_utilisateur INT REFERENCES utilisateurs(id),
 		id_livre INT REFERENCES livres(id),
 		date_emprunt DATE,
-		date_retour_prevue DATE,
-		date_retour_reelle DATE
+		date_retour_prevue DATE
 	);
 
 	CREATE TABLE reservations (
@@ -42,28 +50,13 @@ CREATE DATABASE bibliotheque
 		date_reservation DATE,
 		statut VARCHAR(100)
 	);
-	CREATE TABLE utilisateurs (
-			id SERIAL PRIMARY KEY,
+
+
+CREATE TABLE contact (
 			nom VARCHAR(255),
 			prénom VARCHAR(255),
 			email VARCHAR(255),
-			rôle VARCHAR(100),
-			photo VARCHAR(255)  
-			password_ VARCHAR(255),
-		);
-
-CREATE TABLE admin (
-			id SERIAL PRIMARY KEY,
-			email VARCHAR(255),
-			rôle VARCHAR(100),
-			password_ VARCHAR(255)
-		);
-
-CREATE TABLE contact (
-			id SERIAL PRIMARY KEY,
-			id_utilisateur INT REFERENCES utilisateurs(id),
-			email VARCHAR(255),
-			message TEXT
+			message_ TEXT
 		);
 
 CREATE TABLE historique (
