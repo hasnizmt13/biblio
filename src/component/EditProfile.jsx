@@ -1,9 +1,47 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { useAuth } from "../Utils/AuthContext.jsx";
+import axios from "axios";
 
 function EditProfile({ children }) {
+  const [nom, setNom] = useState(children.nom);
+  const [prenom, setPrenom] = useState(children.prénom);
+  const [email, setEmail] = useState(children.email);
+  const [role, setRole] = useState(children.rôle);
+  const [password , setPassword] = useState(children.password_)
+  const [confirmpassword , setConfirmPassword] = useState(children.password_)
+
+
+  const handleEditUser = async (event) => {
+    event.preventDefault();
+    const userData = {
+      nom: nom,
+      prénom: prenom,
+      email: email,
+      rôle: role,
+      password_: password,
+    };
+    try {
+      const response = await axios.patch(
+        `http://localhost:3000/utilisateurs?id=eq.${children.id}`,
+        userData
+      );
+      console.log("Edit User Success:", response.data);
+      try{
+        const response = await axios.get(
+          `http://localhost:3000/utilisateurs?id=eq.${children.id}`);
+        const users = response.data;
+        localStorage.setItem("user", JSON.stringify(users[0])); // Store user data in local storage
+
+      }catch{
+        console.error("get User Error:", err);
+      }
+      window.location.reload();
+    } catch (err) {
+      console.error("Edit User Error:", err);
+    }
+  };
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -17,7 +55,9 @@ function EditProfile({ children }) {
   return (
     <>
       <div className="mt-24 flex  justify-center  bg-darkBlue flex mx-auto space-y-1 h-auto w-2/5 rounded-lg">
-        <form className="space-y-6 flex flex-col justify-center items-center h-full w-full">
+        <form className="space-y-6 flex flex-col justify-center items-center h-full w-full" action=""
+          method="post"
+          onSubmit={handleEditUser}>
           <br />
           <h1 className="text-4xl px-5 py-1 text-white pb-5">
             Modifier le profile
@@ -29,6 +69,7 @@ function EditProfile({ children }) {
             id="nom"
             defaultValue={children.nom}
             placeholder={children.nom}
+            onChange={(e) => setNom(e.target.value)}
           />
           <input
             className="w-2/3 p-2 rounded-full"
@@ -37,6 +78,8 @@ function EditProfile({ children }) {
             id="prenom"
             defaultValue={children.prénom}
             placeholder={children.prénom}
+            onChange={(e) => setPrenom(e.target.value)}
+
           />
           <input
             className=" hidden w-2/3 p-2 rounded-full"
@@ -44,7 +87,7 @@ function EditProfile({ children }) {
             name="role"
             id="role"
             defaultValue={children.role}
-            placeholder={children.prénom}
+            placeholder={children.role}
           />
           <input
             className="w-2/3 p-2 rounded-full"
@@ -53,6 +96,8 @@ function EditProfile({ children }) {
             id="email"
             defaultValue={children.email}
             placeholder={children.email}
+            onChange={(e) => setEmail(e.target.value)}
+
           />
           <div className="relative w-2/3">
             <input
@@ -62,6 +107,8 @@ function EditProfile({ children }) {
               id="password"
               defaultValue={children.password_}
               placeholder={children.password_}
+              onChange={(e) => setPassword(e.target.value)}
+
             />
             <button
               type="button"
@@ -79,6 +126,8 @@ function EditProfile({ children }) {
               id="confirmpassword"
               defaultValue={children.password_}
               placeholder={children.password_}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              
             />
             <button
               type="button"

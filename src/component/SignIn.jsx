@@ -24,7 +24,7 @@ function SignIn() {
         console.log("Login Successful:", users[0]); // Debug: show user data
         localStorage.setItem("user", JSON.stringify(users[0])); // Store user data in local storage
         if (users[0].rôle === "admin") {
-          navigate("/empruntManager");
+          navigate("/livresManager");
         } else {
           navigate("/");
         }
