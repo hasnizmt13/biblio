@@ -15,6 +15,20 @@ function Historique() {
     }
 
     try {
+      const response = await axios.post(
+        "http://localhost:3000/rpc/historiques_user",
+        { id_ut: user.id },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status !== 200) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+      setHistorique(response.data);
      
     } catch (error) {
       console.error("Failed to fetch Historique:", error);
@@ -48,9 +62,9 @@ function Historique() {
               <tbody>
                 {historiques.map(reserv => (
                   <tr key={reserv.id} className="border-b">
-                    <td className="px-4 py-2">{reserv.age}</td>
-                    <td className="px-4 py-2">{reserv.city}</td>
-                    <td className="px-4 py-2">{reserv.city}</td>
+                    <td className="px-4 py-2">{reserv.titre}</td>
+                    <td className="px-4 py-2">{reserv.date_emprunt}</td>
+                    <td className="px-4 py-2">{reserv.date_retour_reelle}</td>
                   </tr>
                 ))}
               </tbody>
