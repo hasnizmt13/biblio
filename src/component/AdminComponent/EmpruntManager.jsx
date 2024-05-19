@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 
 function EmpruntManager() {
   const [emprunts, setEmprunts] = useState([]);
+
   const RendreLivre = async (info) => {
     const historiqueData = {
       id_utilisateur: info.id_user,
@@ -36,7 +37,7 @@ function EmpruntManager() {
         console.error("Failed to delete reservation:", updateError);
       }
     } catch (error) {
-      console.error("Failed to emprunt Book:", error);
+      console.error("Failed to rendre Book:", error);
       if (error.response) {
         console.error("Response data:", error.response.data);
         console.error("Response status:", error.response.status);
@@ -58,7 +59,7 @@ function EmpruntManager() {
       );
       setEmprunts(response.data);
     } catch (error) {
-      console.error("Failed to fetch Reservations:", error);
+      console.error("Failed to fetch emprunts:", error);
       if (error.response) {
         console.error("Response data:", error.response.data);
         console.error("Response status:", error.response.status);

@@ -9,3 +9,6 @@ GRANT DELETE ON ALL TABLES IN SCHEMA public TO web_anon;
 GRANT USAGE, SELECT ON SEQUENCE reservations_id_seq TO web_anon;
 GRANT USAGE, SELECT ON SEQUENCE livres_id_seq TO web_anon;
 GRANT USAGE, SELECT ON SEQUENCE utilisateurs_id_seq TO web_anon;
+GRANT USAGE, SELECT ON SEQUENCE emprunts_id_seq TO web_anon;
+GRANT USAGE, SELECT ON SEQUENCE historique_id_seq TO web_anon;
+
