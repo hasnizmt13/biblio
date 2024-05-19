@@ -78,7 +78,7 @@ function LivresManager() {
                   <th className="px-4 py-2 text-white text-left">
                     Année de publication
                   </th>
-                  <th className=" py-2 text-white text-left">Genre</th>
+                  <th className="px-4 py-2 text-white text-left">Genre</th>
                   <th className="px-4 py-2 text-white text-left">Isbn</th>
                   <th className="px-4 py-2 text-white text-left">
                     Nombre de pages
@@ -97,10 +97,10 @@ function LivresManager() {
               <tbody>
                 {livres.map((livre) => (
                   <tr key={livre.id} className="border-b">
-                    <td className="py-2">{livre.titre}</td>
-                    <td className="py-2">{livre.auteur}</td>
+                    <td className="py-2 px-4">{livre.titre}</td>
+                    <td className="px-4 py-2">{livre.auteur}</td>
                     <td className="py-2">{livre.année_publication}</td>
-                    <td className=" py-2">{livre.genre}</td>
+                    <td className=" px-4 py-2">{livre.genre}</td>
                     <td className="py-2">{livre.isbn}</td>
                     <td className="py-2">{livre.nombre_pages}</td>
                     <td className="py-2">{livre.description}</td>
@@ -111,7 +111,7 @@ function LivresManager() {
                     <td className="py-2">
                       <img
                         className="bg-darkBlue"
-                        src={livre.photo}
+                        src="src/assets/les_miserable.jpg"
                         alt="photo de livre"
                       />
                     </td>
