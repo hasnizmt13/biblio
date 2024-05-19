@@ -1,13 +1,30 @@
-import React from 'react'
-import Commons from './Commons.jsx';
+import React from "react";
+import Commons from "./Commons.jsx";
+import axios from "axios";
+import { useAuth } from "../Utils/AuthContext.jsx";
+import { useEffect , useState} from "react";
 
 function Historique() {
-  const reservs = [
-    { id: 1, name: 'Alice', age: 24, city: '22/05/2024' },
-    { id: 2, name: 'Bob', age: 30, city: '22/05/2024'  },
-    { id: 3, name: 'Carla', age: 29, city: '22/05/2024' }
-  ];
+  const [historiques, setHistorique] = useState([]);
+  const { user } = useAuth();
 
+  const fetchHistorique = async () => {
+    if (!user) {
+      console.error("User not authenticated");
+      return;
+    }
+
+    try {
+     
+    } catch (error) {
+      console.error("Failed to fetch Historique:", error);
+      if (error.response) {
+      }
+    }
+  };
+  useEffect(() => {
+    fetchHistorique();
+  }, [user]);
   return (
     <div className='pt-14 flex min-h-screen '>
 
@@ -24,15 +41,13 @@ function Historique() {
               <thead className="bg-darkBlue">
                 <tr>
                   <th className="px-4 py-2 text-white text-left">Nom du livre</th>
-                  <th className="px-4 py-2 text-white text-left">Date de réservation</th>
                   <th className="px-4 py-2 text-white text-left">Date d'emprunt</th>
-                  <th className="px-4 py-2 text-white text-left">Date de retour</th>
+                  <th className="px-4 py-2 text-white text-left">Date de retour réelle</th>
                 </tr>
               </thead> 
               <tbody>
-                {reservs.map(reserv => (
+                {historiques.map(reserv => (
                   <tr key={reserv.id} className="border-b">
-                    <td className="px-4 py-2">{reserv.name}</td>
                     <td className="px-4 py-2">{reserv.age}</td>
                     <td className="px-4 py-2">{reserv.city}</td>
                     <td className="px-4 py-2">{reserv.city}</td>
